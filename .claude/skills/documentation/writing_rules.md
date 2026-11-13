@@ -8,6 +8,22 @@ A skill that refers to these rules states which element of its document is
 of which kind below. When the skill gives a stricter limit or an explicit
 exemption for an element, the skill wins.
 
+## How a skill adopts these rules
+
+Every skill that writes a document as its output follows these rules. To
+make a skill follow them, add the following to the skill.
+
+- A reference to this file by its path from the repository root,
+  `.claude/skills/documentation/writing_rules.md`.
+  - Do not use a path relative to the skill directory. A skill directory can
+    be a symlink, so a relative path may not resolve.
+- An instruction to read this file before writing the document.
+- The kind of each element of the document.
+- The fixed text for a section that can be empty, if the document has one.
+
+A repository that receives such a skill needs the `documentation` skill
+too. Add both to `.github/sync.yml`.
+
 ## Length limits
 
 | Kind of element | English | Japanese |

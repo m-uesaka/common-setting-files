@@ -20,6 +20,21 @@ group:
         dest: .claude/skills/resolve-pr-comments/
         deleteOrphaned: true
 
+  # Documentation standard and the writing rules that create-tasks,
+  # resolve-pr-comments, and low-cognitive-load-ux refer to by the path
+  # .claude/skills/documentation/writing_rules.md: every target. It goes to
+  # .claude/skills/ in regional-quiz-entry-form as well, because the skills
+  # refer to it by that path from the repository root.
+  - repos: |
+      m-uesaka/writing-scoring-system
+      m-uesaka/quiz-generator
+      m-uesaka/buzzer-on-sports-2-website
+      m-uesaka/regional-quiz-entry-form
+    files:
+      - source: .claude/skills/documentation/
+        dest: .claude/skills/documentation/
+        deleteOrphaned: true
+
   # Same two skills for regional-quiz-entry-form, where
   # .claude/skills/{create-tasks,resolve-pr-comments} are symlinks into
   # .agents/skills/. Write to the real directories so the symlinks keep working.
