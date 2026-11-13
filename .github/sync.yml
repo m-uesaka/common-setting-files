@@ -1,0 +1,72 @@
+# Which files go to which repositories. Read by .github/workflows/sync.yml
+# (BetaHuhn/repo-file-sync-action). Each target gets a pull request, never a
+# direct push.
+#
+# Skills are synced one directory at a time so that skills that exist only in
+# a target repository are left alone. `deleteOrphaned` applies inside a synced
+# skill directory only: a file removed from a skill here is removed there too.
+
+group:
+  # Stack-independent skills: every target.
+  - repos: |
+      m-uesaka/writing-scoring-system
+      m-uesaka/quiz-generator
+      m-uesaka/buzzer-on-sports-2-website
+    files:
+      - source: .claude/skills/create-tasks/
+        dest: .claude/skills/create-tasks/
+        deleteOrphaned: true
+      - source: .claude/skills/resolve-pr-comments/
+        dest: .claude/skills/resolve-pr-comments/
+        deleteOrphaned: true
+
+  # Same two skills for regional-quiz-entry-form, where
+  # .claude/skills/{create-tasks,resolve-pr-comments} are symlinks into
+  # .agents/skills/. Write to the real directories so the symlinks keep working.
+  - repos: |
+      m-uesaka/regional-quiz-entry-form
+    files:
+      - source: .claude/skills/create-tasks/
+        dest: .agents/skills/create-tasks/
+        deleteOrphaned: true
+      - source: .claude/skills/resolve-pr-comments/
+        dest: .agents/skills/resolve-pr-comments/
+        deleteOrphaned: true
+
+  # UI/UX design standard: targets with a user interface.
+  - repos: |
+      m-uesaka/writing-scoring-system
+      m-uesaka/regional-quiz-entry-form
+      m-uesaka/buzzer-on-sports-2-website
+    files:
+      - source: .claude/skills/low-cognitive-load-ux/
+        dest: .claude/skills/low-cognitive-load-ux/
+        deleteOrphaned: true
+
+  # Hono + SvelteKit monorepo stack (apps/backend, apps/frontend): skills and
+  # the agents written for that layout.
+  - repos: |
+      m-uesaka/writing-scoring-system
+      m-uesaka/regional-quiz-entry-form
+    files:
+      - source: .claude/skills/bun-runtime/
+        dest: .claude/skills/bun-runtime/
+        deleteOrphaned: true
+      - source: .claude/skills/google-ts-style/
+        dest: .claude/skills/google-ts-style/
+        deleteOrphaned: true
+      - source: .claude/skills/hono/
+        dest: .claude/skills/hono/
+        deleteOrphaned: true
+      - source: .claude/skills/svelte-code-writer/
+        dest: .claude/skills/svelte-code-writer/
+        deleteOrphaned: true
+      - source: .claude/skills/svelte-core-bestpractices/
+        dest: .claude/skills/svelte-core-bestpractices/
+        deleteOrphaned: true
+      - source: .claude/skills/typescript/
+        dest: .claude/skills/typescript/
+        deleteOrphaned: true
+      - .claude/agents/fullstack-reviewer.md
+      - .claude/agents/hono-backend-engineer.md
+      - .claude/agents/sveltekit-frontend-engineer.md
